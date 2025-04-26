@@ -42,6 +42,14 @@ jobs:
           name: juice-shop-sbom
           path: sbom.cdx.json
 
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+    
       - name: Install Semgrep
         run: |
           curl -sL https://semgrep.dev/get-semgrep.sh | sh
