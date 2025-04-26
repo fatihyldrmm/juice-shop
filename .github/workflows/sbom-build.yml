@@ -3,6 +3,10 @@ name: Build Docker Image, Generate SBOM, Run SAST, and Secret Scan
 on:
   push:
     branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * *" # her sabah 04:00'te çalışır
 
 jobs:
   build-sbom-sast:
@@ -67,19 +71,11 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-
-      - name: Install Gitleaks
-        run: |
-          wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks-linux-amd64
-          chmod +x gitleaks-linux-amd64
-          mv gitleaks-linux-amd64 gitleaks
-
-      - name: Run Gitleaks Secret Scan
-        run: |
-          ./gitleaks detect --source . --report-format sarif --report-path gitleaks-results.sarif
-
-      - name: Upload Gitleaks Report
-        uses: actions/upload-artifact@v4
         with:
-          name: gitleaks-secret-scan-report
-          path: gitleaks-results.sarif
+          fetch-depth: 0 # tüm commit geçmişi lazım gitleaks için
+
+      - name: Run Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }} # Eğer kurumsal lisansın varsa aç
