@@ -70,7 +70,8 @@ jobs:
 
       - name: Install Gitleaks
         run: |
-          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/main/install.sh | bash -s -- -b /usr/local/bin
+          wget -q https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -O /usr/local/bin/gitleaks
+          chmod +x /usr/local/bin/gitleaks
 
       - name: Run Gitleaks Secret Scan
         run: |
@@ -81,3 +82,4 @@ jobs:
         with:
           name: gitleaks-secret-scan-report
           path: gitleaks-results.sarif
+
