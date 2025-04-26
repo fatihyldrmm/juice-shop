@@ -70,7 +70,7 @@ jobs:
 
       - name: Install Gitleaks
         run: |
-          wget https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64
+          wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks-linux-amd64
           chmod +x gitleaks-linux-amd64
           mv gitleaks-linux-amd64 gitleaks
 
