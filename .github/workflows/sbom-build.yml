@@ -7,7 +7,6 @@ on:
 jobs:
   build-sbom-sast:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -45,18 +44,16 @@ jobs:
   semgrep:
     runs-on: ubuntu-latest
     steps:
-    
       - name: Checkout source
         uses: actions/checkout@v4
 
-    
       - name: Install Semgrep
         run: |
-          curl -sL https://semgrep.dev/get-semgrep.sh | sh
+          curl -sL https://semgrep.dev/get-semgrep.sh | bash
 
       - name: Run Semgrep SAST Scan
         run: |
-          ./semgrep scan --config auto --output semgrep-results.sarif --sarif
+          semgrep scan --config auto --output semgrep-results.sarif --sarif
 
       - name: Upload Semgrep Report
         uses: actions/upload-artifact@v4
