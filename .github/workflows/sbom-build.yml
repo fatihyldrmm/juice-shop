@@ -62,7 +62,7 @@ jobs:
           name: semgrep-sast-report
           path: semgrep-results.sarif
 
-    gitleaks:
+  gitleaks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
