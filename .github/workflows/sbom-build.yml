@@ -1,4 +1,4 @@
-name: Build Docker Image, Generate SBOM, Run SAST, and Secret Scan
+name: Build Docker Image, Generate SBOM, Run SAST, Secret Scan, and Dummy Deploy
 
 on:
   push:
@@ -82,3 +82,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  dummy-deploy:
+    needs: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy Deploy Step
+        run: |
+          echo "🚀 Dummy Deploy Completed Successfully!"
