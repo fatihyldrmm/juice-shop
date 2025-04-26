@@ -62,7 +62,7 @@ jobs:
           name: semgrep-sast-report
           path: semgrep-results.sarif
 
-  gitleaks:
+    gitleaks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -70,16 +70,16 @@ jobs:
 
       - name: Install Gitleaks
         run: |
-          wget -q https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -O /usr/local/bin/gitleaks
-          chmod +x /usr/local/bin/gitleaks
+          wget https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64
+          chmod +x gitleaks-linux-amd64
+          mv gitleaks-linux-amd64 gitleaks
 
       - name: Run Gitleaks Secret Scan
         run: |
-          gitleaks detect --source . --report-format sarif --report-path gitleaks-results.sarif
+          ./gitleaks detect --source . --report-format sarif --report-path gitleaks-results.sarif
 
       - name: Upload Gitleaks Report
         uses: actions/upload-artifact@v4
         with:
           name: gitleaks-secret-scan-report
           path: gitleaks-results.sarif
-
